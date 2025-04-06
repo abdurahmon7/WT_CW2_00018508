@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title Travel Journal
+    link(rel="stylesheet", href="/styles/style.css")
+  body
+    block content
+      nav
+        if !user
+          a(href="/auth/google") 🔐 Sign in with Google
+        else
+          p Logged in as #{user.displayName}
+          a(href="/auth/logout") 🚪 Logout
+
