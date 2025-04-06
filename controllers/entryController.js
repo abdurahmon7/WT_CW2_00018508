@@ -1,31 +1,10 @@
-const express = require('express');
-const router = express.Router();
 const Entry = require('../models/Entry');
-const multer = require('multer');
-const path = require('path');
 const fs = require('fs');
-const { log } = require('console');
-
-router.use(express.urlencoded({ extended: true }));
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect('/');
-}  
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Save files in uploads/
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
-  }
-});
-
-const upload = multer({ storage });
+const path = require('path');
+const { validationResult } = require('express-validator');
 
 // List all entries
-router.get('/', async (req, res) => {
+exports.getAllEntries = async (req, res) => {
   try {
     const entries = await Entry.find().sort({ date: -1 }).populate('user');
     res.render('entries', { entries, user: req.user });
@@ -33,16 +12,15 @@ router.get('/', async (req, res) => {
     console.error(err);
     res.status(500).send('Server Error');
   }
-});
+};
 
+// Handle form submission for creating new entry
+exports.createEntry = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).render('new-entry', { errors: errors.array() });
+  }
 
-// Show form to create new entry
-router.get('/new', ensureAuthenticated, (req, res) => {
-  res.render('new-entry');
-});
-
-// Handle form submission
-router.post('/new', ensureAuthenticated, upload.single('photo'), async (req, res) => {
   try {
     const { title, location, description } = req.body;
     const photoUrl = req.file ? `/uploads/${req.file.filename}` : null;
@@ -61,11 +39,10 @@ router.post('/new', ensureAuthenticated, upload.single('photo'), async (req, res
     console.error('Error saving entry:', err);
     res.status(500).send('Something went wrong.');
   }
-});
+};
 
-
- // Show edit form
-router.get('/:id/edit', ensureAuthenticated, async (req, res) => {
+// Show edit form
+exports.showEditForm = async (req, res) => {
   try {
     const entry = await Entry.findById(req.params.id);
     if (!entry) return res.status(404).send('Entry not found');
@@ -74,13 +51,18 @@ router.get('/:id/edit', ensureAuthenticated, async (req, res) => {
     console.error(err);
     res.status(500).send('Something went wrong');
   }
-});
+};
 
- // Update entry
- router.post('/:id/edit', ensureAuthenticated, upload.single('photo'), async (req, res) => {
+// Update entry
+exports.editEntry = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const entry = await Entry.findById(req.params.id);
+    return res.status(400).render('edit-entry', { entry, errors: errors.array() });
+  }
+
   try {
     const entry = await Entry.findById(req.params.id);
-
     if (!entry) return res.status(404).send('Entry not found');
     if (!entry.user.equals(req.user._id)) return res.status(403).send('Unauthorized');
 
@@ -89,7 +71,6 @@ router.get('/:id/edit', ensureAuthenticated, async (req, res) => {
     entry.description = req.body.description;
 
     if (req.file) {
-      // Remove old image if exists
       if (entry.photoUrl) {
         const oldPath = path.join(__dirname, '../uploads/', path.basename(entry.photoUrl));
         fs.unlink(oldPath, err => {
@@ -105,17 +86,15 @@ router.get('/:id/edit', ensureAuthenticated, async (req, res) => {
     console.error(err);
     res.status(500).send('Update failed');
   }
-});
+};
 
-
- // Delete entry
- router.get('/:id/delete', ensureAuthenticated, async (req, res) => {
+// Delete entry
+exports.deleteEntry = async (req, res) => {
   try {
     const entry = await Entry.findById(req.params.id);
     if (!entry) return res.status(404).send('Entry not found');
     if (!entry.user.equals(req.user._id)) return res.status(403).send('Unauthorized');
 
-    // Delete the image file
     if (entry.photoUrl) {
       const filePath = path.join(__dirname, '../uploads/', path.basename(entry.photoUrl));
       fs.unlink(filePath, err => {
@@ -129,10 +108,4 @@ router.get('/:id/edit', ensureAuthenticated, async (req, res) => {
     console.error(err);
     res.status(500).send('Delete failed');
   }
-});
-
-
-
-  
-
-module.exports = router;
+};

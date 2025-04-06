@@ -14,13 +14,14 @@ block content
     div
       label(for="location") Location:
       select(name='location' id='location' required)
+        option(value='Unnamed Place') Unnamed Place
         option(value='New York') New York
         option(value='Los Angeles') Los Angeles
         option(value='Chicago') Chicago
         option(value='Miami') Miami
         option(value='San Francisco') San Francisco
     div
-      label(for="photoUrl") Photo URL (optional):
+      label(style="font-size:14px;" for="photoUrl") Photo URL:
       input(type='file' name='photo' accept='image/*' required)
     div
-      button(type="submit") Save Entry
+      button(type="submit").editSubmitBtn Save Entry

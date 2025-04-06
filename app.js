@@ -75,7 +75,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/', require('./routes/index'));
-app.use('/entries', require('./routes/entries'));
+app.use('/entries', require('./routes/entryRoutes'));
 app.use('/auth', authRoutes);
 
 
