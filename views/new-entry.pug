@@ -1,18 +1,19 @@
-extends layout
+extends layout.pug
 
 block content
+  link(rel='stylesheet', href='/new-entry.css')
   h1 Add a New Travel Entry
 
   form(action="/entries/new" method="POST")
     div
       label(for="title") Title:
       input(type="text" name="title" required)
+    div.textarea
+      label(for="description") Description:
+      textarea(name="description")
     div
       label(for="location") Location:
       input(type="text" name="location")
-    div
-      label(for="description") Description:
-      textarea(name="description")
     div
       label(for="photoUrl") Photo URL (optional):
       input(type="text" name="photoUrl")

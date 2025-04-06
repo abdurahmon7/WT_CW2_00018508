@@ -1,14 +1,24 @@
 doctype html
 html
   head
-    title Travel Journal
-    link(rel="stylesheet", href="/styles/style.css")
+    title Travel Journal App
+    link(rel='stylesheet', href='/styles.css')
   body
-    block content
-      nav
-        if !user
-          a(href="/auth/google") 🔐 Sign in with Google
-        else
-          p Logged in as #{user.displayName}
-          a(href="/auth/logout") 🚪 Logout
+    header
+      nav.header__nav
+        ul.header__ul
+          li: a(href='/') Home
+          li: a(href='/entries') Entries
+          li: a(href='/entries/new') New Entry
+        ul.header__ul
+          if user
+            li: a(href='/logout') Logout
+          else
+            li: a(href='/auth/google') Login with Google
 
+    block content 
+
+    footer
+      p This web application was created to fulfill Web Technology module’s requirements and does not represent an actual company or service.
+        br 
+        | &copy; ID:00018508

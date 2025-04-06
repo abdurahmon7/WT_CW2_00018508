@@ -1,8 +1,15 @@
-extends layout
+extends layout.pug
 
 block content
+  link(rel='stylesheet', href='/index.css')
   h1 Travel Journal App
-  p Welcome to the Travel Journal.
-  a(href="/entries") View Travel Entries
+  p Welcome to the Travel Journal. Here you can see people's reviews on their travel (title, description, and photo). 
+    br
+    | If you want to post your own entries, you can do so by signing in with your google account.
+  p Click 
+    a(href="/entries") here 
+    | to continue exploring recent reviews
   br
-  a(href="/auth/google") Sign in with Google
+  p Do not forget to 
+    a(href="/auth/google") Sign in with Google 
+    | to add your own entry
