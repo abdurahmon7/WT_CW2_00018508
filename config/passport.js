@@ -9,7 +9,6 @@ passport.use(
       callbackURL: '/auth/google/callback'
     },
     (accessToken, refreshToken, profile, done) => {
-      // You can save user info to DB here
       return done(null, profile);
     }
   )

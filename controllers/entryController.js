@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { validationResult } = require('express-validator');
 
-// List all entries
+// all entries
 exports.getAllEntries = async (req, res) => {
   try {
     const entries = await Entry.find().sort({ date: -1 }).populate('user');
@@ -14,7 +14,7 @@ exports.getAllEntries = async (req, res) => {
   }
 };
 
-// Handle form submission for creating new entry
+// creating new entry
 exports.createEntry = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -41,7 +41,7 @@ exports.createEntry = async (req, res) => {
   }
 };
 
-// Show edit form
+// edit form
 exports.showEditForm = async (req, res) => {
   try {
     const entry = await Entry.findById(req.params.id);

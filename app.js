@@ -11,15 +11,14 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 require('./config/passport');
 
-// Init app
 const app = express();
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then(() => console.log("✅ MongoDB connected"))
-  .catch(err => console.error("❌ MongoDB connection error:", err));
+}).then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB connection error:", err));
 
 // User Model (temporary inline model)
 const User = mongoose.model('User', new mongoose.Schema({
@@ -71,13 +70,10 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/entries', require('./routes/entryRoutes'));
 app.use('/auth', authRoutes);
-
 
 // Auth routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
@@ -93,6 +89,5 @@ app.get('/logout', (req, res) => {
   });
 });
 
-// Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server started on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));

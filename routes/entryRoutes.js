@@ -6,20 +6,20 @@ const { ensureAuthenticated } = require('../middlewares/auth');
 const { getAllEntries, createEntry, showEditForm, editEntry, deleteEntry } = require('../controllers/entryController');
 
 
-// List all entries
+// all entries
 router.get('/', getAllEntries);
 
-// Show form to create new entry
+// create new entry
 router.get('/new', ensureAuthenticated, (req, res) => res.render('new-entry'));
 
-// Handle form submission
+// form submission
 router.post('/new', ensureAuthenticated, upload.single('photo'), [
   body('title').notEmpty().withMessage('Title is required'),
   body('description').notEmpty().withMessage('Description is required'),
   body('location').notEmpty().withMessage('Location is required'),
 ], createEntry);
 
-// Show edit form
+// edit form
 router.get('/:id/edit', ensureAuthenticated, showEditForm);
 
 // Update entry

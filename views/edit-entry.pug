@@ -1,6 +1,11 @@
 extends layout.pug
 
+
+
 block content
+  if typeof errors !== 'undefined' && errors.length > 0
+    script.
+      alert("#{errors[0].msg}")
   link(rel='stylesheet', href='/new-entry.css')
   h1 Edit Travel Entry
 
