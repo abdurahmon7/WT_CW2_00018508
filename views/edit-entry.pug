@@ -1,20 +1,28 @@
 extends layout.pug
 
 block content
+  link(rel='stylesheet', href='/new-entry.css')
   h1 Edit Travel Entry
 
-  form(action=`/entries/${entry._id}/edit` method="POST")
+  form(action=`/entries/${entry._id}/edit` method="POST", enctype="multipart/form-data")
     div
-      label(for="title") Title:
+      label(style="font-size:14px;" for="title") Title:
       input(type="text" name="title" required value=entry.title)
     div
-      label(for="location") Location:
-      input(type="text" name="location" value=entry.location)
-    div
-      label(for="description") Description:
+      label(style="font-size:14px;" for="location") Location: 
+       select(name='location' id='location' required)
+        option(value='New York') New York
+        option(value='Los Angeles') Los Angeles
+        option(value='Chicago') Chicago
+        option(value='Miami') Miami
+        option(value='San Francisco') San Francisco
+    div.textarea
+      label(style="font-size:14px;" for="description") Description:
       textarea(name="description")= entry.description
     div
-      label(for="photoUrl") Photo URL:
-      input(type="text" name="photoUrl" value=entry.photoUrl)
+      if entry.photoUrl
+        img(src=entry.photoUrl, width="200")
+        p(style="font-size:14px;") Current Image
+      input(type="file", name="photo", accept="image/*")
     div
-      button(type="submit") Update Entry
+      button(type="submit").editSubmitBtn Update Entry

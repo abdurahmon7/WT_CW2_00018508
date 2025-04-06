@@ -54,6 +54,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(session({
@@ -69,6 +70,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
+
 
 
 // Routes

@@ -12,9 +12,9 @@ block content
             .entryCardContentTop
               p Posted by #{entry.user ? entry.user.displayName : 'Guest'}
               if entry.location
-                p Location: #{entry.location}
+                p  #{entry.location}
             if entry.photoUrl
-              img(src=entry.photoUrl, width="100%")
+              img(src=entry.photoUrl, alt="Entry Image", width="100%")
             .entryContentBottom
               h2= entry.title
               if entry.description

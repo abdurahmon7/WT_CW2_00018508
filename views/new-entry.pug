@@ -4,7 +4,7 @@ block content
   link(rel='stylesheet', href='/new-entry.css')
   h1 Add a New Travel Entry
 
-  form(action="/entries/new" method="POST")
+  form(action="/entries/new" method="POST" enctype='multipart/form-data')
     div
       label(for="title") Title:
       input(type="text" name="title" required)
@@ -13,9 +13,14 @@ block content
       textarea(name="description")
     div
       label(for="location") Location:
-      input(type="text" name="location")
+      select(name='location' id='location' required)
+        option(value='New York') New York
+        option(value='Los Angeles') Los Angeles
+        option(value='Chicago') Chicago
+        option(value='Miami') Miami
+        option(value='San Francisco') San Francisco
     div
       label(for="photoUrl") Photo URL (optional):
-      input(type="text" name="photoUrl")
+      input(type='file' name='photo' accept='image/*' required)
     div
       button(type="submit") Save Entry
