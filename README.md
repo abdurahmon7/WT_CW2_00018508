@@ -17,18 +17,18 @@ Persistent Storage: MongoDB is used for storing journal entries and user data.
 
 3. git clone https://github.com/abdurahmon7/WT_CW2_00018508.git
 4. run npm install to install all the necessary dependencies:
-    "body-parser": "^2.2.0",
-    "connect-mongo": "^5.1.0",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "express-session": "^1.18.1",
-    "express-validator": "^7.2.1",
-    "method-override": "^3.0.0",
-    "mongoose": "^8.13.2",
-    "multer": "^1.4.5-lts.2",
-    "passport": "^0.7.0",
-    "passport-google-oauth20": "^2.0.0",
-    "pug": "^3.0.3"
+    body-parser
+    connect-mongo
+    dotenv
+    express
+    express-session
+    express-validator
+    method-override
+    mongoose
+    multer
+    passport
+    passport-google-oauth20
+    pug
 
 5. run node app.js
 
