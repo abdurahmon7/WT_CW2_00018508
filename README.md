@@ -11,15 +11,9 @@ Persistent Storage: MongoDB is used for storing journal entries and user data.
 
 1. Node.js and npm installed on your local machine.
 
-2. Set up environment variables !!!
-        Create a .env file in the root directory of your project and add the following:
-        DELETE DELETETHISWORD BETWEEN KEYS
-        PORT=3000
-        MONGODB_URI=mongodb+srv://admin:00018508@00018508.i9q8ih2.mongodb.netDELETETHISWORD/?retryWrites=true&w=majority&appName=00018508
-        SESSION_SECRET=superDELETETHISWORDsecretkey
-        GOOGLE_CLIENT_ID=438120950043-DELETETHISWORDemdd4i4qpevma16p7trjs72r1gqjm9ec.apps.googleusercontent.com
-        GOOGLE_CLIENT_SECRET=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usl_LjmM8JLHDv
-        GOOGLE_CALLBACK_URL=/auth/google/callback
+2. Set up environment variables .ENV !!!
+        IF YOU DON'T SEE .ENV FILE IN ROOT REPOSITORY OF PROJECT ADD IT
+        IT IS AVAILABLE IN .ZIP FOLDER
 
 3. git clone https://github.com/abdurahmon7/WT_CW2_00018508.git
 4. run npm install to install all the necessary dependencies:
