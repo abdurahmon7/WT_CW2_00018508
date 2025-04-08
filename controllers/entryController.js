@@ -30,7 +30,7 @@ exports.createEntry = async (req, res) => {
       location,
       description,
       photoUrl,
-      user: req.user._id
+      user: req.user && req.user._id ? req.user._id : null
     });
 
     await entry.save();
@@ -64,7 +64,12 @@ exports.editEntry = async (req, res) => {
   try {
     const entry = await Entry.findById(req.params.id);
     if (!entry) return res.status(404).send('Entry not found');
-    if (!entry.user.equals(req.user._id)) return res.status(403).send('Unauthorized');
+    if (!req.user && entry.user !== null) {
+      return res.status(403).send('Unauthorized');
+    }
+    if (req.user && entry.user !== null && !entry.user.equals(req.user._id)) {
+      return res.status(403).send('Unauthorized');
+    }
 
     entry.title = req.body.title;
     entry.location = req.body.location;
@@ -93,7 +98,12 @@ exports.deleteEntry = async (req, res) => {
   try {
     const entry = await Entry.findById(req.params.id);
     if (!entry) return res.status(404).send('Entry not found');
-    if (!entry.user.equals(req.user._id)) return res.status(403).send('Unauthorized');
+    if (!req.user && entry.user !== null) {
+      return res.status(403).send('Unauthorized');
+    }
+    if (req.user && entry.user !== null && !entry.user.equals(req.user._id)) {
+      return res.status(403).send('Unauthorized');
+    }
 
     if (entry.photoUrl) {
       const filePath = path.join(__dirname, '../uploads/', path.basename(entry.photoUrl));

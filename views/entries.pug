@@ -20,7 +20,7 @@ block content
               if entry.description
                 p #{entry.description}
               p(style="font-size:12px; margin-top: 15px; text-align:end;") Date: #{entry.date.toDateString()}
-          if user && entry.user && entry.user._id.toString() === user._id.toString()
+          if  !entry.user && !user || user && entry.user && entry.user._id.toString() === user._id.toString()
             div.EditDeleteBtns
               a(href=`/entries/${entry._id}/edit`) ✏️ Edit
               a(href='/entries/' + entry._id + '/delete', onclick="return confirm('Are you sure you want to delete this entry?')") 🗑️ Delete
